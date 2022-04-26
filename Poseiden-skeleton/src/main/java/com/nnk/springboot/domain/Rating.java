@@ -1,5 +1,7 @@
 package com.nnk.springboot.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -7,6 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "rating")
+@Data
 public class Rating {
     // TODO: Map columns in data table RATING with corresponding java fields
 

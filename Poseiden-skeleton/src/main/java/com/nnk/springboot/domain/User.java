@@ -1,10 +1,13 @@
 package com.nnk.springboot.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

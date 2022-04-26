@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
@@ -10,8 +11,10 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "bidlist")
+@Data
 public class BidList {
     // TODO: Map columns in data table BIDLIST with corresponding java fields
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     Integer BidListId;
@@ -57,6 +60,7 @@ public class BidList {
     String sourceListId;
     @Column(name="side")
     String side;
+
 
 
 }
