@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO )
     private Integer id;
     @NotBlank(message = "Username is mandatory")
     @Column(name="username")

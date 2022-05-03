@@ -1,5 +1,7 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,15 +16,14 @@ import java.util.ArrayList;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    /*@Autowired
-    private UserRepository userRepository;*/
+    @Autowired
+    private UserRepository userRepository;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        /*User user = userRepository.findByEmail(email).get();
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassword(),new ArrayList<>());*/
-        return null;
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).get();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),new ArrayList<>());
     }
 
 }

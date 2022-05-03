@@ -26,16 +26,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+        auth.inMemoryAuthentication().withUser("a").password("a").roles("ADMIN");
     }
 
    @Override
     public void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests()
+        /*http.authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-                //.loginProcessingUrl("/perform_login")
                 .and()
                 .rememberMe()
                 .key("rem-me-key")
@@ -43,7 +43,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMeCookieName("remembermelogin")
                 .and()
                 .logout();
-       http.csrf().disable();
+       http.csrf().disable();*/
     }
 
     @Bean
