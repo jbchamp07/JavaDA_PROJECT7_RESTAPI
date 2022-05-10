@@ -45,7 +45,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests()
+        /*http.authorizeRequests()
                 .antMatchers("/register","/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -64,7 +64,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                .deleteCookies("JSESSIONID")
                .permitAll()
                .and()
-               .rememberMe().key("UniqueKey").tokenValiditySeconds(3600);
+               .rememberMe().key("UniqueKey").tokenValiditySeconds(3600);*/
     }
 
     @Bean
