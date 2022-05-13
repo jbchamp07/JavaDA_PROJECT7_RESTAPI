@@ -4,6 +4,8 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class RatingService {
+
+    Logger logger = LoggerFactory.getLogger(RatingService.class);
 
     @Autowired
     private RatingRepository ratingRepository;
@@ -22,14 +26,16 @@ public class RatingService {
 
     public void create(Rating rating){
         ratingRepository.save(rating);
+        logger.info("Rating : " + rating + " is created");
     }
 
     public void update(Rating rating){
         ratingRepository.save(rating);
     }
 
-    public void delete(int RatingId){
-        ratingRepository.deleteById(RatingId);
+    public void delete(int ratingId){
+        ratingRepository.deleteById(ratingId);
+        logger.info("Rating with id " + ratingId + " is deleted");
     }
 
     public Rating getById(Integer id) {
@@ -47,9 +53,9 @@ public class RatingService {
             newRating.setOrderNumber(rating.getOrderNumber());
             ratingRepository.save(newRating);
             updated = true;
-            //logger.info("BidList with id " + id + " is updated as " + newBidList);
+            logger.info("Rating with id " + id + " is updated as " + newRating);
         } else {
-            //logger.error("Failed to update BidList with id " + id + " as " + bidList);
+            logger.error("Failed to update Rating with id " + id + " as " + rating);
         }
         return updated;
     }

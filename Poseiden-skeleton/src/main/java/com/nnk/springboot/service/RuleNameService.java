@@ -4,6 +4,8 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import java.util.Optional;
 
 @Service
 public class RuleNameService {
-
+    Logger logger = LoggerFactory.getLogger(RuleNameService.class);
     @Autowired
     private RuleNameRepository ruleNameRepository;
 
@@ -22,14 +24,16 @@ public class RuleNameService {
 
     public void create(RuleName ruleName){
         ruleNameRepository.save(ruleName);
+        logger.info("RuleName : " + ruleName + " is created");
     }
 
     public void update(RuleName ruleName){
         ruleNameRepository.save(ruleName);
     }
 
-    public void delete(int RuleNameId){
-        ruleNameRepository.deleteById(RuleNameId);
+    public void delete(int ruleNameId){
+        ruleNameRepository.deleteById(ruleNameId);
+        logger.info("RuleName with id " + ruleNameId + " is deleted");
     }
 
     public RuleName getById(Integer id) {
@@ -49,9 +53,9 @@ public class RuleNameService {
             newRuleName.setSqlStr(ruleName.getSqlStr());
             ruleNameRepository.save(newRuleName);
             updated = true;
-            //logger.info("BidList with id " + id + " is updated as " + newBidList);
+            logger.info("RuleName with id " + id + " is updated as " + newRuleName);
         } else {
-            //logger.error("Failed to update BidList with id " + id + " as " + bidList);
+            logger.error("Failed to update RuleName with id " + id + " as " + ruleName);
         }
         return updated;
     }

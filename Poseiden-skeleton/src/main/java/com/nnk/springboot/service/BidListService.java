@@ -2,6 +2,8 @@ package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class BidListService {
-
+    Logger logger = LoggerFactory.getLogger(BidListService.class);
     @Autowired
     private BidListRepository bidListRepository;
 
@@ -20,6 +22,7 @@ public class BidListService {
 
     public void create(BidList bidList){
         bidListRepository.save(bidList);
+        logger.info("BidList : " + bidList + " is created");
     }
 
     public void update(BidList bidList){
@@ -28,6 +31,18 @@ public class BidListService {
 
     public void delete(int bidListId){
         bidListRepository.deleteById(bidListId);
+        logger.info("BidList with id " + bidListId + " is deleted");
+
+        /*boolean deleted = false;
+        Optional<BidList> list = bidListRepository.findById(bidListId);
+        if (list.isPresent()) {
+            deleted = true;
+            bidListRepository.deleteById(bidListId);
+            logger.info("BidList with id " + bidListId + " is deleted");
+        }else{
+            logger.error("Failed to delete BidList with id " + bidListId +);
+        }*/
+
     }
 
     public BidList getById(Integer id) {
@@ -44,9 +59,9 @@ public class BidListService {
             newBidList.setBidQuantity(bidList.getBidQuantity());
             bidListRepository.save(newBidList);
             updated = true;
-            //logger.info("BidList with id " + id + " is updated as " + newBidList);
+            logger.info("BidList with id " + id + " is updated as " + newBidList);
         } else {
-            //logger.error("Failed to update BidList with id " + id + " as " + bidList);
+            logger.error("Failed to update BidList with id " + id + " as " + bidList);
         }
         return updated;
     }

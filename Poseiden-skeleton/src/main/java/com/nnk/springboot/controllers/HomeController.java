@@ -17,7 +17,7 @@ public class HomeController
 	{
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		model.addAttribute("security", authentication.getName());
-		return "home";
+		return "bidList/list";
 	}
 
 	@RequestMapping("/admin/home")

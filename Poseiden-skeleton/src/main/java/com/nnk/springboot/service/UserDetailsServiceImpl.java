@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,8 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username).get();
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),new ArrayList<>());
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()){
+            return new org.springframework.security.core.userdetails.User(user.get().getUsername(),user.get().getPassword(),new ArrayList<>());
+        }else{
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
     }
 
 }
