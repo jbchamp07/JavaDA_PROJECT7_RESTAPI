@@ -23,7 +23,8 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
         </p>
         <button id="btLogin" type="submit">Login</button>
-        <a href="register">Register</a>
+        <a href="user/add">Register</a>
+        <a th:href="@{/oauth2/authorization/github}">Login with GitHub</a>
     </form>
 </div>
 </body></html>

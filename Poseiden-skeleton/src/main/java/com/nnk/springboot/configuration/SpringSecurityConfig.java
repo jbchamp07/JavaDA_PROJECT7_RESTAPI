@@ -42,7 +42,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -52,7 +51,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests().antMatchers(
-                        "/register",
+                        "/user/add",
                         "/login",
                         "/js/**",
                         "/css/**",
@@ -62,6 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                .and().oauth2Login().loginPage("/login")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -34,4 +35,12 @@ public class UserService {
         logger.info("User with id " + userId + " is deleted");
     }
 
+    public Boolean findByName(String name) {
+        Optional<User> user = userRepository.findByUsername(name);
+        if(user.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
