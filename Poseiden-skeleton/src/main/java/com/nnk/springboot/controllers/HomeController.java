@@ -40,8 +40,6 @@ public class HomeController
 				newUser.setUsername(principal.getAttribute("login"));
 				newUser.setRole("USER");
 				newUser.setFullname(principal.getAttribute("login"));
-				BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-				newUser.setPassword(passwordEncoder.encode("a"));
 				userService.create(newUser);
 			}
 		}
