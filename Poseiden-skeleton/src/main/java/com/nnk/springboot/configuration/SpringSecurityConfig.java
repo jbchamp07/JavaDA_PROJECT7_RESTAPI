@@ -78,5 +78,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/resources/**", "/static/**");
     }
-
+//TODO logg verifier
 }
