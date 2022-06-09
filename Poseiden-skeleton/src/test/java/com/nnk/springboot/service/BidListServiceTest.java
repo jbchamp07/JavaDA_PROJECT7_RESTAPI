@@ -33,15 +33,17 @@ public class BidListServiceTest {
     }
     @After
     public void end(){
-        bidListService.delete(2555);
+        //bidListService.delete(2555);
     }
     @BeforeEach
     public void create(){
-        createTest();
+        //createTest();
+        bidListService.create(bidList);
     }
     @AfterEach
     public void delete(){
-        deleteTest();
+        //deleteTest();
+        bidListService.delete(2555);
     }
 
     @Test
