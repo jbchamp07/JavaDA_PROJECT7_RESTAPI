@@ -12,14 +12,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
-
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BidTests {
 
 	@Autowired
 	private BidListRepository bidListRepository;
-/*
+
 	@Test
 	public void bidListTest() {
 		BidList bid = new BidList();
@@ -46,5 +46,6 @@ public class BidTests {
 		bidListRepository.delete(bid);
 		Optional<BidList> bidList = bidListRepository.findById(id);
 		Assert.assertFalse(bidList.isPresent());
-	}*/
+	}
 }
+*/
