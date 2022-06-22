@@ -1,11 +1,13 @@
 package com.nnk.springboot.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "bidlist")
@@ -58,7 +60,5 @@ public class BidList {
     String sourceListId;
     @Column(name="side")
     String side;
-
-
 
 }

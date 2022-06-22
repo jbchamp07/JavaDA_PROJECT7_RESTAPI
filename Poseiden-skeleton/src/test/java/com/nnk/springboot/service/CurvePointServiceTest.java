@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -88,22 +90,23 @@ public class CurvePointServiceTest {
         assertEquals(2525.0,curvePointService.getById(2555).getValue());
     }
 
-    //TODO
-    /*@Test
+
+    @Test
     public void deleteTest(){
         CurvePoint newCurvePoint = new CurvePoint();
         newCurvePoint.setId(5555);
         newCurvePoint.setCurveId(2555);
         newCurvePoint.setTerm(3.5);
         newCurvePoint.setValue(25.55);
-        when(curvePointRepository.save(newCurvePoint)).thenReturn(newCurvePoint);
-        curvePointService.create(curvePoint);
-        when(curvePointRepository.findById(5555)).thenReturn(Optional.of(newCurvePoint));
-        assertEquals(3.5,curvePointService.getById(5555).getTerm());
+
+
+        final CurvePoint entity = newCurvePoint;
+        Optional<CurvePoint> optionalEntityType = Optional.of(entity);
+        Mockito.when(curvePointRepository.findById(5555)).thenReturn(optionalEntityType);
         curvePointService.delete(5555);
-        when(curvePointRepository.findById(5555)).thenReturn(null);
-        assertEquals(null,curvePointService.getById(5555));
-    }*/
+        Mockito.verify(curvePointRepository, times(1)).deleteById(entity.getId());
+
+    }
 
     @Test
     public void getByIdTest(){
@@ -117,6 +120,15 @@ public class CurvePointServiceTest {
         when(curvePointRepository.save(curvePoint)).thenReturn(curvePoint);
         curvePointService.updateCurvePoint(2555,curvePoint);
         when(curvePointRepository.findById(2555)).thenReturn(Optional.ofNullable(curvePoint));
+        assertEquals(2525.0,curvePointService.getById(2555).getValue());
+
+    }
+    @Test
+    public void updateBidListTestIf(){
+        curvePoint.setValue(2525.0);
+        when(curvePointRepository.save(curvePoint)).thenReturn(curvePoint);
+        when(curvePointRepository.findById(2555)).thenReturn(Optional.ofNullable(curvePoint));
+        curvePointService.updateCurvePoint(2555,curvePoint);
         assertEquals(2525.0,curvePointService.getById(2555).getValue());
 
     }

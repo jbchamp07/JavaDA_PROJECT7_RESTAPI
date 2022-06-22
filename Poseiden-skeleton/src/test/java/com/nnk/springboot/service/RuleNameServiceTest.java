@@ -12,6 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -91,8 +93,8 @@ public class RuleNameServiceTest {
         when(ruleNameRepository.findById(2555)).thenReturn(Optional.ofNullable(ruleName));
         assertEquals("jsonTest2",ruleNameService.getById(2555).getJson());
     }
-    //TODO
-    /*@Test
+
+    @Test
     public void deleteTest(){
         RuleName newRuleName = new RuleName();
         newRuleName.setId(5555);
@@ -101,14 +103,13 @@ public class RuleNameServiceTest {
         newRuleName.setTemplate("templateTest2");
         newRuleName.setSqlStr("sqlStrTest2");
         newRuleName.setSqlPart("sqlPartTest2");
-        when(ruleNameRepository.save(newRuleName)).thenReturn(newRuleName);
-        ruleNameService.create(newRuleName);
-        when(ruleNameRepository.findById(5555)).thenReturn(Optional.of(newRuleName));
-        assertEquals("jsonTest2",ruleNameService.getById(5555).getJson());
+
+        final RuleName entity = newRuleName;
+        Optional<RuleName> optionalEntityType = Optional.of(entity);
+        Mockito.when(ruleNameRepository.findById(5555)).thenReturn(optionalEntityType);
         ruleNameService.delete(5555);
-        when(ruleNameRepository.findById(5555)).thenReturn(null);
-        assertEquals(null,ruleNameService.getById(5555));
-    }*/
+        Mockito.verify(ruleNameRepository, times(1)).deleteById(entity.getId());
+    }
 
     @Test
     public void getByIdTest(){
@@ -124,5 +125,12 @@ public class RuleNameServiceTest {
         when(ruleNameRepository.findById(2555)).thenReturn(Optional.ofNullable(ruleName));
         assertEquals("jsonTest2",ruleNameService.getById(2555).getJson());
     }
-
+    @Test
+    public void updateBidListTestIf(){
+        ruleName.setJson("jsonTest2");
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        when(ruleNameRepository.findById(2555)).thenReturn(Optional.ofNullable(ruleName));
+        ruleNameService.updateRuleName(2555,ruleName);
+        assertEquals("jsonTest2",ruleNameService.getById(2555).getJson());
+    }
 }

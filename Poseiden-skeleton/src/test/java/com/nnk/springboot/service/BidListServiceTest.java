@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +22,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -90,22 +93,28 @@ public class BidListServiceTest {
         assertEquals("typeUpdateTest",bidListService.getById(2555).getType());
     }
 
-    //TODO
-    /*@Test
+    @Test
     public void deleteTest(){
         BidList newBidList = new BidList();
         newBidList.setBidListId(5555);
         newBidList.setBidQuantity(1.0);
         newBidList.setAccount("accountTest2");
         newBidList.setType("typeTest2");
-        when(bidListRepository.save(newBidList)).thenReturn(newBidList);
-        bidListService.create(newBidList);
-        when(bidListRepository.findById(5555)).thenReturn(Optional.of(newBidList));
-        assertEquals(1.0,bidListService.getById(5555).getBidQuantity());
+        //when(bidListRepository.save(newBidList)).thenReturn(newBidList);
+        //bidListService.create(newBidList);
+        //when(bidListRepository.findById(5555)).thenReturn(Optional.of(newBidList));
+        //assertEquals(1.0,bidListService.getById(5555).getBidQuantity());
+
+        final BidList entity = newBidList;
+        Optional<BidList> optionalEntityType = Optional.of(entity);
+        Mockito.when(bidListRepository.findById(5555)).thenReturn(optionalEntityType);
+
         bidListService.delete(5555);
-        when(bidListRepository.findById(5555)).thenReturn(null);
-        assertEquals(null,bidListService.getById(5555));
-    }*/
+        Mockito.verify(bidListRepository, times(1)).deleteById(entity.getBidListId());
+
+        //assertThat(bidListRepository.findById(5555).get()).isNull();
+
+    }
 
     @Test
     public void getByIdTest(){
@@ -119,6 +128,14 @@ public class BidListServiceTest {
         when(bidListRepository.save(bidList)).thenReturn(bidList);
         bidListService.updateBidList(2555,bidList);
         when(bidListRepository.findById(2555)).thenReturn(Optional.ofNullable(bidList));
+        assertEquals("typeUpdateTest",bidListService.getById(2555).getType());
+    }
+    @Test
+    public void updateBidListTestIf(){
+        bidList.setType("typeUpdateTest");
+        when(bidListRepository.save(bidList)).thenReturn(bidList);
+        when(bidListRepository.findById(2555)).thenReturn(Optional.ofNullable(bidList));
+        bidListService.updateBidList(2555,bidList);
         assertEquals("typeUpdateTest",bidListService.getById(2555).getType());
     }
 

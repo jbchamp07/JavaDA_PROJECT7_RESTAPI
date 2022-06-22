@@ -26,8 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -96,22 +95,19 @@ public class UserServiceTest {
         assertEquals(true,userService.findByName("usernameTest2"));
     }
 
-    /*@Test
+    @Test
     public void deleteTest(){
         User newUser = new User();
         newUser.setUsername("uTest");
         newUser.setPassword("pTest");
         newUser.setId(5555);
-        when(userRepository.save(newUser)).thenReturn(newUser);
-        userService.create(newUser);
-        when(userRepository.findByUsername("uTest")).thenReturn(Optional.of(user));
-        assertEquals(true,userService.findByName("uTest"));
-        when(userRepository.findByUsername("uTest")).thenReturn(null);
-        //TODO
-        //when(userRepository.delete(newUser)).thenReturn(null);
+
+        final User entity = newUser;
+        Optional<User> optionalEntityType = Optional.of(entity);
+        Mockito.when(userRepository.findById(5555)).thenReturn(optionalEntityType);
         userService.delete(5555);
-        assertEquals(false,userService.findByName("uTest"));
-    }*/
+        Mockito.verify(userRepository, times(1)).deleteById(entity.getId());
+    }
 
 
 

@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.User;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -85,20 +88,19 @@ public class TradeServiceTest {
         assertEquals("accountTest2",tradeService.getById(2555).getAccount());
     }
 
-    //TODO
-   /* @Test
+
+    @Test
     public void deleteTest(){
         Trade newTrade = new Trade();
         newTrade.setTradeId(5555);
         newTrade.setAccount("accountTest2");
-        when(tradeRepository.save(newTrade)).thenReturn(newTrade);
-        tradeService.create(newTrade);
-        when(tradeRepository.findById(5555)).thenReturn(Optional.of(newTrade));
-        assertEquals("accountTest2",tradeService.getById(5555).getAccount());
+
+        final Trade entity = newTrade;
+        Optional<Trade> optionalEntityType = Optional.of(entity);
+        Mockito.when(tradeRepository.findById(5555)).thenReturn(optionalEntityType);
         tradeService.delete(5555);
-        when(tradeRepository.findById(5555)).thenReturn(null);
-        assertEquals(null,tradeService.getById(5555));
-    }*/
+        Mockito.verify(tradeRepository, times(1)).deleteById(entity.getTradeId());
+    }
 
     @Test
     public void getByIdTest(){
@@ -112,6 +114,14 @@ public class TradeServiceTest {
         when(tradeRepository.save(trade)).thenReturn(trade);
         tradeService.updateTrade(2555,trade);
         when(tradeRepository.findById(2555)).thenReturn(Optional.ofNullable(trade));
+        assertEquals("accountTest2",tradeService.getById(2555).getAccount());
+    }
+    @Test
+    public void updateBidListTestIf(){
+        trade.setAccount("accountTest2");
+        when(tradeRepository.save(trade)).thenReturn(trade);
+        when(tradeRepository.findById(2555)).thenReturn(Optional.ofNullable(trade));
+        tradeService.updateTrade(2555,trade);
         assertEquals("accountTest2",tradeService.getById(2555).getAccount());
     }
 
