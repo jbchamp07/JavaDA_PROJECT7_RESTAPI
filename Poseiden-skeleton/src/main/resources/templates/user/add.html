@@ -32,7 +32,7 @@
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-10">
-					<input type="password" onfocusout="passwordValidation()" th:field="*{password}" id="password" name="password" placeholder="Password" class="col-4" minlength="8">
+					<input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" type="password" onfocusout="passwordValidation()" th:field="*{password}" id="password" name="password" placeholder="Password" class="col-4" >
 					<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 					<span id="validPsw"></span>
 				</div>
@@ -62,29 +62,13 @@
 
 <script type="application/javascript">
 	function passwordValidation() {
-		var password = document.getElementById("password")
-		var specialChar
-		var upperLetter
+		var pswd = document.getElementById("password")
+		document.getElementById("validPsw").innerHTML = "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:"
 
-		while (i <= password.length){
-			character = password.charAt(i);
-			if (!isNaN(character * 1)){
-				specialChar = true;
-			}else{
-				if (character == character.toUpperCase()) {
-					upperLetter = true
-				}
-			}
-			i++;
-		}
-
-		if(!specialChar){
-			document.getElementById("validPsw").innerHTML = "Your password don't contain special char"
-		}
-		if(!upperLetter){
-			document.getElementById("validPsw").innerHTML = "Your password don't have upper case letter"
-		}
 	}
+
+
+
 </script>
 
 
