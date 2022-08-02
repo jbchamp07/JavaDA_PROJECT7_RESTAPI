@@ -1,9 +1,0 @@
-.container{
-    display:flex;
-    justify-content: center;
-}
-input{
-    float: right;
-    margin-right: 20%;
-    background-color: #f2f2f2;
-}
